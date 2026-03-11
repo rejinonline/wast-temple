@@ -2,7 +2,7 @@
   "name": "Westchester Ayyappa Swami Temple",
   "short_name": "WAST Temple",
   "description": "Temple updates, events & pooja bookings for the Westchester Ayyappa community.",
-  "start_url": "/",
+  "start_url": "./",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",

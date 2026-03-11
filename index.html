@@ -3,100 +3,1097 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Westchester Ayyappa Swami Temple — WAST INC.</title>
+  <title>Westchester Ayyappa Swami Temple</title>
   <meta name="description" content="Westchester Ayyappa Swami Temple — WAST INC. Non-profit Hindu temple in New York serving the community since 1988." />
   <meta name="theme-color" content="#7B2D00" />
-
-  <!-- PWA -->
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-
-  <!-- Open Graph -->
-  <meta property="og:title"       content="Westchester Ayyappa Swami Temple" />
-  <meta property="og:description" content="Authentic poojas, bhajans & spiritual services in New York since 1988." />
-  <meta property="og:url"         content="https://www.newyorkayyappatemple.org/" />
-  <meta property="og:type"        content="website" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --saffron:    #FF6B00;
+      --deep-red:   #7B2D00;
+      --gold:       #C8972A;
+      --gold-light: #E8BA5A;
+      --cream:      #FDF6E3;
+      --parchment:  #F5E6C8;
+      --ink:        #1A0A00;
+      --muted:      #6B4C2A;
+      --white:      #FFFFFF;
+
+      --r-sm: 6px;
+      --r-md: 12px;
+      --r-lg: 24px;
+
+      --shadow-gold: 0 4px 30px rgba(200,151,42,0.25);
+      --shadow-deep: 0 8px 40px rgba(26,10,0,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── DECORATIVE BORDER STRIP ── */
+    .border-strip {
+      height: 6px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--saffron) 0px, var(--saffron) 20px,
+        var(--gold) 20px, var(--gold) 40px,
+        var(--deep-red) 40px, var(--deep-red) 60px,
+        var(--gold) 60px, var(--gold) 80px
+      );
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--deep-red);
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      padding: 6px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar a { color: var(--gold-light); text-decoration: none; }
+    .topbar a:hover { color: var(--white); }
+
+    /* ── HEADER / NAV ── */
+    header {
+      background: var(--ink);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-deep);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      gap: 16px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 52px;
+      height: 52px;
+      background: radial-gradient(circle at 35% 35%, var(--gold-light), var(--gold));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 0 0 3px var(--saffron), 0 0 20px rgba(255,107,0,0.5);
+      flex-shrink: 0;
+    }
+
+    .logo-text h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      line-height: 1.2;
+      font-weight: 700;
+    }
+    .logo-text span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--parchment);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: var(--r-sm);
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { background: rgba(200,151,42,0.15); color: var(--gold-light); }
+
+    .btn-subscribe-nav {
+      background: var(--saffron);
+      color: var(--white) !important;
+      border-radius: 20px;
+      padding: 8px 16px !important;
+      font-weight: 700;
+    }
+    .btn-subscribe-nav:hover { background: var(--gold) !important; transform: scale(1.02); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold-light);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(123,45,0,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(255,107,0,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(200,151,42,0.15) 0%, transparent 50%),
+        linear-gradient(160deg, #0D0400 0%, #1A0A00 40%, #2D1200 100%);
+    }
+
+    /* Lotus mandala SVG background */
+    .hero-mandala {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+    .hero-mandala svg {
+      width: min(800px, 100vw);
+      height: min(800px, 100vh);
+      animation: slowSpin 120s linear infinite;
+    }
+    @keyframes slowSpin { to { transform: rotate(360deg); } }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 40px 24px;
+      max-width: 860px;
+      animation: fadeUp 1.2s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--saffron);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--saffron);
+      opacity: 0.6;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      color: var(--gold-light);
+      line-height: 1.15;
+      font-weight: 900;
+      margin-bottom: 8px;
+      text-shadow: 0 0 60px rgba(200,151,42,0.4);
+    }
+
+    .hero-subtitle {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.9rem);
+      color: var(--saffron);
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px auto;
+    }
+    .hero-divider span { color: var(--gold); font-size: 1.4rem; }
+    .hero-divider::before, .hero-divider::after {
+      content: '';
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .hero-divider::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: rgba(253,246,227,0.75);
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto 36px;
+      font-weight: 300;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 40px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--saffron), var(--deep-red));
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(255,107,0,0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255,107,0,0.5);
+    }
+    .btn-outline {
+      border: 1.5px solid var(--gold);
+      color: var(--gold-light);
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: rgba(200,151,42,0.12);
+      transform: translateY(-3px);
+    }
+
+    /* ── TICKER / ANNOUNCEMENT BAND ── */
+    .ticker-band {
+      background: var(--deep-red);
+      overflow: hidden;
+      padding: 10px 0;
+      position: relative;
+    }
+    .ticker-band::before, .ticker-band::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      z-index: 2;
+    }
+    .ticker-band::before { left: 0; background: linear-gradient(90deg, var(--deep-red), transparent); }
+    .ticker-band::after  { right: 0; background: linear-gradient(-90deg, var(--deep-red), transparent); }
+
+    .ticker-label {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      background: var(--saffron);
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      text-transform: uppercase;
+      z-index: 3;
+    }
+
+    .ticker-track {
+      display: flex;
+      animation: ticker 40s linear infinite;
+      white-space: nowrap;
+      padding-left: 200px;
+    }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-track:hover { animation-play-state: paused; }
+
+    .ticker-item {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      padding: 0 60px;
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .ticker-item::after { content: '✦'; color: var(--saffron); }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 80px 24px; }
+
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--saffron);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      color: var(--deep-red);
+      margin-bottom: 12px;
+    }
+
+    .section-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .section-rule span { color: var(--gold); font-size: 1.1rem; }
+    .section-rule::before, .section-rule::after {
+      content: '';
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    /* ── UPDATES SECTION ── */
+    .updates-section { background: var(--parchment); }
+
+    .updates-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .update-cards { display: flex; flex-direction: column; gap: 16px; }
+
+    .update-card {
+      background: var(--white);
+      border-radius: var(--r-md);
+      padding: 24px;
+      border-left: 4px solid var(--saffron);
+      box-shadow: 0 2px 12px rgba(26,10,0,0.07);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .update-card:hover {
+      transform: translateX(6px);
+      box-shadow: var(--shadow-gold);
+      border-left-color: var(--gold);
+    }
+    .update-card.pinned { border-left-color: var(--deep-red); }
+
+    .update-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .update-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--parchment);
+      color: var(--deep-red);
+    }
+    .update-tag.event { background: rgba(255,107,0,0.1); color: var(--saffron); }
+    .update-tag.pooja { background: rgba(123,45,0,0.1); color: var(--deep-red); }
+    .update-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'Cinzel', serif;
+    }
+    .update-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .update-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .pinned-badge {
+      margin-left: auto;
+      font-size: 0.7rem;
+      color: var(--deep-red);
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Subscribe Panel */
+    .subscribe-panel {
+      background: linear-gradient(160deg, var(--deep-red), #3D1200);
+      border-radius: var(--r-lg);
+      padding: 32px 24px;
+      color: var(--cream);
+      position: sticky;
+      top: 90px;
+    }
+
+    .subscribe-panel h3 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+    }
+    .subscribe-panel p {
+      font-size: 0.85rem;
+      color: rgba(253,246,227,0.7);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .sub-option {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(200,151,42,0.3);
+      border-radius: var(--r-md);
+      padding: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .sub-option:hover { background: rgba(255,255,255,0.12); border-color: var(--gold); }
+
+    .sub-option-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .sub-icon { font-size: 1.2rem; }
+    .sub-option-header span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+    }
+    .sub-option p {
+      font-size: 0.75rem;
+      color: rgba(253,246,227,0.55);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .sub-input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(200,151,42,0.3);
+      background: rgba(0,0,0,0.3);
+      color: var(--cream);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .sub-input:focus { border-color: var(--gold); }
+    .sub-input::placeholder { color: rgba(253,246,227,0.35); }
+
+    .sub-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background: var(--saffron);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sub-btn:hover { background: var(--gold); }
+
+    .push-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--saffron), #D44000);
+      color: var(--white);
+      border: none;
+      border-radius: var(--r-md);
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .push-btn:hover { transform: scale(1.02); box-shadow: 0 4px 16px rgba(255,107,0,0.4); }
+
+    /* ── EVENTS SECTION ── */
+    .events-section { background: var(--cream); }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .event-card {
+      background: var(--white);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(26,10,0,0.08);
+      transition: all 0.35s;
+    }
+    .event-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-gold); }
+
+    .event-card-top {
+      background: linear-gradient(135deg, var(--deep-red), #5A1E00);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .event-card-top::after {
+      content: '🪔';
+      position: absolute;
+      right: 16px;
+      bottom: -6px;
+      font-size: 3rem;
+      opacity: 0.18;
+    }
+
+    .event-date-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--r-sm);
+      padding: 8px 14px;
+      margin-bottom: 12px;
+    }
+    .event-date-badge .day {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.6rem;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+    .event-date-badge .month {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--saffron);
+      text-transform: uppercase;
+    }
+
+    .event-card-top h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--cream);
+      font-weight: 600;
+    }
+
+    .event-card-body { padding: 20px 24px; }
+    .event-card-body p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .event-meta-row {
+      display: flex;
+      gap: 16px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: 'Cinzel', serif;
+    }
+    .event-meta-row span { display: flex; align-items: center; gap: 5px; }
+
+    /* ── SERVICES ── */
+    .services-section {
+      background: linear-gradient(160deg, var(--ink), #2D1200);
+      position: relative;
+      overflow: hidden;
+    }
+    .services-section::before {
+      content: '🕉';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 30rem;
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .services-section .section-title { color: var(--gold-light); }
+    .services-section .section-eyebrow { color: var(--saffron); }
+    .services-section .section-rule span { color: var(--gold); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(200,151,42,0.2);
+      border-radius: var(--r-lg);
+      padding: 32px 24px;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .service-card:hover {
+      background: rgba(200,151,42,0.1);
+      border-color: var(--gold);
+      transform: translateY(-6px);
+    }
+
+    .service-icon { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+    .service-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+    .service-card p {
+      font-size: 0.83rem;
+      color: rgba(253,246,227,0.55);
+      line-height: 1.65;
+    }
+
+    .service-card .btn {
+      margin-top: 20px;
+      padding: 10px 22px;
+      font-size: 0.7rem;
+      background: rgba(255,107,0,0.15);
+      color: var(--saffron);
+      border: 1px solid rgba(255,107,0,0.3);
+    }
+    .service-card:hover .btn { background: var(--saffron); color: var(--white); }
+
+    /* ── HOURS & INFO ── */
+    .info-section { background: var(--parchment); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    .info-card {
+      background: var(--white);
+      border-radius: var(--r-lg);
+      padding: 32px;
+      box-shadow: 0 2px 12px rgba(26,10,0,0.06);
+    }
+
+    .info-card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--saffron), var(--deep-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .info-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      color: var(--deep-red);
+      margin-bottom: 14px;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--parchment);
+      font-size: 0.85rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day-name { color: var(--muted); }
+    .hours-row .time { color: var(--ink); font-weight: 400; }
+    .hours-row .time.highlight { color: var(--saffron); font-weight: 600; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .contact-item-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .contact-item a { color: var(--saffron); text-decoration: none; }
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* Map embed */
+    .map-embed {
+      border-radius: var(--r-md);
+      overflow: hidden;
+      height: 200px;
+      background: #e8e0d0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      border: 1px solid var(--parchment);
+      margin-top: 14px;
+    }
+
+    /* ── APP PROMO ── */
+    .app-promo {
+      background: linear-gradient(135deg, var(--deep-red) 0%, #1A0A00 50%, #3D1800 100%);
+      text-align: center;
+      padding: 80px 24px;
+    }
+
+    .app-promo h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      color: var(--gold-light);
+      margin-bottom: 16px;
+    }
+    .app-promo p {
+      font-size: 1rem;
+      color: rgba(253,246,227,0.7);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .app-features {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .app-feature {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .app-feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(200,151,42,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+    .app-feature span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      color: rgba(253,246,227,0.6);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 60px 24px 30px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo-wrap { margin-bottom: 16px; }
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: rgba(253,246,227,0.5);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 0.85rem;
+      color: rgba(253,246,227,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--gold-light); }
+
+    .social-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,151,42,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .social-btn:hover { background: rgba(200,151,42,0.15); border-color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(200,151,42,0.15);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: rgba(253,246,227,0.3);
+      font-family: 'Cinzel', serif;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ── NOTIFICATION TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--deep-red);
+      color: var(--cream);
+      padding: 14px 20px;
+      border-radius: var(--r-md);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-deep);
+      transform: translateX(140%);
+      transition: transform 0.4s ease;
+      z-index: 9999;
+      max-width: 320px;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast-icon { font-size: 1.2rem; }
+    .toast-close {
+      margin-left: auto;
+      cursor: pointer;
+      opacity: 0.6;
+      font-size: 1.1rem;
+    }
+
+    /* ── MOBILE NAV ── */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: var(--ink);
+      padding: 20px 24px;
+      gap: 4px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--parchment);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(200,151,42,0.1);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .updates-grid { grid-template-columns: 1fr; }
+      .subscribe-panel { position: static; }
+      .info-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 600px) {
+      .info-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .topbar { display: none; }
+      section { padding: 60px 16px; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
 <body>
 
-<!-- ══ TOP INFO BAR ═══════════════════════════ -->
+<!-- TOP INFO BAR -->
 <div class="topbar">
   <span>🕉 Swamiye Saranam Ayyappa 🕉</span>
   <span>
     📞 <a href="tel:+19144394303">(914) 439-4303</a>
     &nbsp;|&nbsp;
-    ⏰ Fri: 7–9 PM &nbsp;· Sat: 8 AM–1 PM &nbsp;· Sun: 9 AM–12 PM
+    ⏰ Weekdays: 7–9 PM &nbsp; Weekends: 8 AM – 1 PM
   </span>
 </div>
 
-<!-- ══ HEADER / NAV ════════════════════════════ -->
+<!-- HEADER / NAV -->
 <header>
   <nav>
-    <a href="/" class="logo-wrap" aria-label="WAST Temple Home">
-      <div class="logo-icon" aria-hidden="true">🪔</div>
+    <a href="#" class="logo-wrap">
+      <div class="logo-icon">🪔</div>
       <div class="logo-text">
         <h1>Westchester Ayyappa<br>Swami Temple</h1>
         <span>WAST INC. · Est. 1988</span>
       </div>
     </a>
-
-    <ul class="nav-links" role="navigation" aria-label="Main navigation">
+    <ul class="nav-links">
       <li><a href="#updates">Updates</a></li>
       <li><a href="#events">Events</a></li>
       <li><a href="#services">Pooja Services</a></li>
       <li><a href="#info">Hours & Info</a></li>
+      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#subscribe" class="btn-subscribe-nav">🔔 Subscribe</a></li>
     </ul>
-
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <div class="hamburger" onclick="toggleMobileNav()">
       <span></span><span></span><span></span>
-    </button>
+    </div>
   </nav>
-
-  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
-    <a href="#updates">📢 Updates</a>
-    <a href="#events">🗓 Upcoming Events</a>
-    <a href="#services">🛕 Pooja Services</a>
-    <a href="#info">📍 Hours & Info</a>
-    <a href="#subscribe">🔔 Subscribe for Updates</a>
-  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#updates" onclick="toggleMobileNav()">📢 Updates</a>
+    <a href="#events" onclick="toggleMobileNav()">🗓 Upcoming Events</a>
+    <a href="#services" onclick="toggleMobileNav()">🛕 Pooja Services</a>
+    <a href="#info" onclick="toggleMobileNav()">📍 Hours & Info</a>
+    <a href="#subscribe" onclick="toggleMobileNav()">🔔 Subscribe for Updates</a>
+  </div>
 </header>
 
-<div class="border-strip" role="presentation"></div>
+<div class="border-strip"></div>
 
-<!-- ══ HERO ═══════════════════════════════════ -->
-<section class="hero" aria-label="Welcome">
-  <div class="hero-bg" aria-hidden="true"></div>
-
-  <!-- Decorative mandala SVG -->
-  <div class="hero-mandala" aria-hidden="true">
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-bg"></div>
+  <div class="hero-mandala">
     <svg viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Mandala rings -->
       <circle cx="400" cy="400" r="350" stroke="#C8972A" stroke-width="1" stroke-dasharray="8 8"/>
       <circle cx="400" cy="400" r="280" stroke="#C8972A" stroke-width="1" stroke-dasharray="4 12"/>
       <circle cx="400" cy="400" r="210" stroke="#C8972A" stroke-width="1.5"/>
       <circle cx="400" cy="400" r="140" stroke="#C8972A" stroke-width="1" stroke-dasharray="6 6"/>
-      <circle cx="400" cy="400" r="70"  stroke="#C8972A" stroke-width="2"/>
+      <circle cx="400" cy="400" r="70" stroke="#C8972A" stroke-width="2"/>
+      <!-- Spokes -->
       <g stroke="#C8972A" stroke-width="0.8" opacity="0.7">
-        <line x1="400" y1="50"  x2="400" y2="750"/>
-        <line x1="50"  y1="400" x2="750" y2="400"/>
+        <line x1="400" y1="50" x2="400" y2="750"/>
+        <line x1="50" y1="400" x2="750" y2="400"/>
         <line x1="155" y1="155" x2="645" y2="645"/>
         <line x1="645" y1="155" x2="155" y2="645"/>
-        <line x1="90"  y1="280" x2="710" y2="520"/>
-        <line x1="280" y1="90"  x2="520" y2="710"/>
-        <line x1="520" y1="90"  x2="280" y2="710"/>
-        <line x1="710" y1="280" x2="90"  y2="520"/>
+        <line x1="90" y1="280" x2="710" y2="520"/>
+        <line x1="280" y1="90" x2="520" y2="710"/>
+        <line x1="520" y1="90" x2="280" y2="710"/>
+        <line x1="710" y1="280" x2="90" y2="520"/>
       </g>
+      <!-- Petal shapes -->
       <g fill="#C8972A" opacity="0.4">
-        <ellipse cx="400" cy="120" rx="18" ry="50" transform="rotate(0   400 400)"/>
-        <ellipse cx="400" cy="120" rx="18" ry="50" transform="rotate(45  400 400)"/>
-        <ellipse cx="400" cy="120" rx="18" ry="50" transform="rotate(90  400 400)"/>
+        <ellipse cx="400" cy="120" rx="18" ry="50" transform="rotate(0 400 400)"/>
+        <ellipse cx="400" cy="120" rx="18" ry="50" transform="rotate(45 400 400)"/>
+        <ellipse cx="400" cy="120" rx="18" ry="50" transform="rotate(90 400 400)"/>
         <ellipse cx="400" cy="120" rx="18" ry="50" transform="rotate(135 400 400)"/>
         <ellipse cx="400" cy="120" rx="18" ry="50" transform="rotate(180 400 400)"/>
         <ellipse cx="400" cy="120" rx="18" ry="50" transform="rotate(225 400 400)"/>
@@ -108,281 +1105,367 @@
 
   <div class="hero-content">
     <p class="hero-eyebrow">Swamiye Saranam Ayyappa</p>
-    <h2 class="hero-title">Westchester<br>Ayyappa Swami Temple</h2>
+    <h1 class="hero-title">Westchester<br>Ayyappa Swami Temple</h1>
     <p class="hero-subtitle">WAST INC. — Serving Devotees Since 1988</p>
-    <div class="hero-divider" aria-hidden="true"><span>✦</span></div>
+    <div class="hero-divider"><span>✦</span></div>
     <p class="hero-desc">
       A sacred space of devotion, tradition, and community in New York.
-      Authentic poojas, bhajans, and spiritual services — led with love for over three decades.
+      Authentic poojas, bhajans, and spiritual services — led with love
+      for over three decades.
     </p>
     <div class="hero-cta">
       <a href="#services" class="btn btn-primary">🛕 Book a Pooja</a>
-      <a href="#updates"  class="btn btn-outline">📢 View Updates</a>
+      <a href="#updates" class="btn btn-outline">📢 View Updates</a>
     </div>
   </div>
 </section>
 
-<!-- ══ TICKER ══════════════════════════════════ -->
-<div class="ticker-band" role="marquee" aria-label="Live temple updates">
-  <div class="ticker-label" aria-hidden="true">📢 Live</div>
-  <div class="ticker-track" id="tickerTrack" aria-live="polite">
-    <!-- Populated by Firebase via updates.js -->
+<!-- TICKER -->
+<div class="ticker-band">
+  <div class="ticker-label">📢 Live Updates</div>
+  <div class="ticker-track" id="tickerTrack">
     <span class="ticker-item">Mandala Pooja begins Dec 1 — Register now</span>
-    <span class="ticker-item">Temple open Saturdays 8AM–1PM &amp; Sundays 9AM–12PM</span>
-    <span class="ticker-item">Karkidaka Vavu Bali — July 27th</span>
+    <span class="ticker-item">Temple open Saturdays 8AM–1PM & Sundays 9AM–12PM</span>
+    <span class="ticker-item">Karkidaka Vavu Bali — July 27th, 2025</span>
     <span class="ticker-item">Ayyappa Bhajan every Friday at 7:30PM</span>
     <span class="ticker-item">Online pooja bookings now available via Square</span>
+    <span class="ticker-item">New location update — See About WAST for details</span>
+    <!-- duplicate for infinite loop -->
     <span class="ticker-item">Mandala Pooja begins Dec 1 — Register now</span>
-    <span class="ticker-item">Temple open Saturdays 8AM–1PM &amp; Sundays 9AM–12PM</span>
-    <span class="ticker-item">Karkidaka Vavu Bali — July 27th</span>
+    <span class="ticker-item">Temple open Saturdays 8AM–1PM & Sundays 9AM–12PM</span>
+    <span class="ticker-item">Karkidaka Vavu Bali — July 27th, 2025</span>
     <span class="ticker-item">Ayyappa Bhajan every Friday at 7:30PM</span>
     <span class="ticker-item">Online pooja bookings now available via Square</span>
+    <span class="ticker-item">New location update — See About WAST for details</span>
   </div>
 </div>
 
-<!-- ══ UPDATES & SUBSCRIBE ═════════════════════ -->
-<section class="updates-section" id="updates" aria-labelledby="updates-title">
+<!-- UPDATES & SUBSCRIBE -->
+<section class="updates-section" id="updates">
   <div class="section-inner">
-    <header class="section-header reveal">
+    <div class="section-header reveal">
       <p class="section-eyebrow">Stay Informed</p>
-      <h2 class="section-title" id="updates-title">Temple Updates</h2>
-      <div class="section-rule" aria-hidden="true"><span>✦</span></div>
-    </header>
+      <h2 class="section-title">Temple Updates</h2>
+      <div class="section-rule"><span>✦</span></div>
+    </div>
 
     <div class="updates-grid">
-      <!-- Update cards — populated by Firebase in real-time -->
-      <div class="update-cards" id="updateCards" aria-live="polite" aria-label="Temple updates">
-        <div class="update-skeleton"></div>
-        <div class="update-skeleton"></div>
-        <div class="update-skeleton"></div>
+      <!-- Update Cards -->
+      <div class="update-cards" id="updateCards">
+
+        <div class="update-card pinned reveal">
+          <div class="update-meta">
+            <span class="update-tag pooja">📌 Pinned</span>
+            <span class="update-date">March 2026</span>
+            <span class="pinned-badge">★ Important</span>
+          </div>
+          <h3>New Temple Location — Transition Update</h3>
+          <p>We are excited to announce our new temple location. Please visit the "New Location" page for full details and the updated address. Devotees are encouraged to check before visiting.</p>
+        </div>
+
+        <div class="update-card reveal">
+          <div class="update-meta">
+            <span class="update-tag event">🗓 Event</span>
+            <span class="update-date">March 8, 2026</span>
+          </div>
+          <h3>Ayyappa Bhajan — Friday Session</h3>
+          <p>Our weekly Friday bhajan session will be held at 7:30 PM. All devotees are welcome. Please arrive on time and wear traditional attire.</p>
+        </div>
+
+        <div class="update-card reveal">
+          <div class="update-meta">
+            <span class="update-tag pooja">🛕 Pooja</span>
+            <span class="update-date">March 5, 2026</span>
+          </div>
+          <h3>Vishnu Sahasranamam — Special Saturday Chanting</h3>
+          <p>A special Vishnu Sahasranamam chanting session will be conducted this Saturday from 9 AM to 11 AM. Sponsorships available — contact Parthasaradhi Pillai at (914) 439-4303.</p>
+        </div>
+
+        <div class="update-card reveal">
+          <div class="update-meta">
+            <span class="update-tag">📣 Announcement</span>
+            <span class="update-date">February 28, 2026</span>
+          </div>
+          <h3>Online Pooja Booking Now Live</h3>
+          <p>You can now book pooja services directly online through our Square booking page. Dedicate a day, sponsor an event, or book a personal ritual from the comfort of your home.</p>
+        </div>
+
       </div>
 
-      <!-- Subscription panel -->
-      <aside class="subscribe-panel" id="subscribe" aria-label="Subscribe to updates">
+      <!-- Subscribe Panel -->
+      <div class="subscribe-panel" id="subscribe">
         <h3>🔔 Get Updates</h3>
-        <p>Never miss a pooja, event, or announcement. Choose how you'd like to be notified.</p>
+        <p>Never miss a pooja, event, or temple announcement. Choose how you'd like to be notified.</p>
 
-        <button class="push-btn" onclick="handlePushSubscribe()">
+        <!-- Push Notifications -->
+        <button class="push-btn" onclick="requestPushPermission()">
           🔔 Enable Push Notifications
         </button>
 
         <br/><br/>
 
+        <!-- Email -->
         <div class="sub-option">
           <div class="sub-option-header">
-            <span class="sub-icon" aria-hidden="true">📧</span>
+            <span class="sub-icon">📧</span>
             <span>Email Subscription</span>
           </div>
           <p>Receive weekly updates and event reminders in your inbox.</p>
-          <input class="sub-input" type="email" id="emailInput"
-                 placeholder="your@email.com" aria-label="Email address" />
-          <button class="sub-btn" onclick="handleEmailSubscribe()">Subscribe via Email</button>
+          <input class="sub-input" type="email" placeholder="your@email.com" id="emailInput"/>
+          <button class="sub-btn" onclick="subscribeEmail()">Subscribe via Email</button>
         </div>
 
+        <!-- WhatsApp -->
         <div class="sub-option">
           <div class="sub-option-header">
-            <span class="sub-icon" aria-hidden="true">💬</span>
+            <span class="sub-icon">💬</span>
             <span>Join WhatsApp Group</span>
           </div>
           <p>Get instant updates in our community WhatsApp group — the fastest way to stay connected.</p>
           <a href="https://wa.me/19144394303?text=I%20would%20like%20to%20join%20the%20WAST%20WhatsApp%20group"
-             target="_blank" rel="noopener noreferrer">
-            <button class="sub-btn whatsapp">💬 Join WhatsApp Group</button>
+             target="_blank" style="display:block;">
+            <button class="sub-btn" style="background:#25D366;">Join WhatsApp Group</button>
           </a>
         </div>
 
+        <!-- SMS -->
         <div class="sub-option">
           <div class="sub-option-header">
-            <span class="sub-icon" aria-hidden="true">📱</span>
+            <span class="sub-icon">📱</span>
             <span>SMS Text Alerts</span>
           </div>
           <p>Text updates for major events and announcements.</p>
-          <input class="sub-input" type="tel" id="smsInput"
-                 placeholder="+1 (914) 000-0000" aria-label="Phone number" />
-          <button class="sub-btn" onclick="handleSMSSubscribe()">Subscribe via SMS</button>
+          <input class="sub-input" type="tel" placeholder="+1 (914) 000-0000" id="smsInput"/>
+          <button class="sub-btn" onclick="subscribeSMS()">Subscribe via SMS</button>
         </div>
-      </aside>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══ UPCOMING EVENTS ══════════════════════════ -->
-<section class="events-section" id="events" aria-labelledby="events-title">
+<!-- EVENTS -->
+<section class="events-section" id="events">
   <div class="section-inner">
-    <header class="section-header reveal">
+    <div class="section-header reveal">
       <p class="section-eyebrow">Calendar</p>
-      <h2 class="section-title" id="events-title">Upcoming Events</h2>
-      <div class="section-rule" aria-hidden="true"><span>✦</span></div>
-    </header>
+      <h2 class="section-title">Upcoming Events</h2>
+      <div class="section-rule"><span>✦</span></div>
+    </div>
 
     <div class="events-grid">
-      <article class="event-card reveal">
+
+      <div class="event-card reveal">
         <div class="event-card-top">
-          <div class="event-date-badge"><span class="day">21</span><span class="month">Mar 2026</span></div>
-          <h3>Ugadi — Telugu New Year</h3>
+          <div class="event-date-badge">
+            <span class="day">21</span>
+            <span class="month">Mar 2026</span>
+          </div>
+          <h3>Ugadi — Telugu New Year Celebrations</h3>
         </div>
         <div class="event-card-body">
-          <p>Celebrate the new year with special poojas, prasadam distribution, and community gathering.</p>
-          <div class="event-meta-row"><span>⏰ 8:00 AM</span><span>📍 Temple Hall</span></div>
+          <p>Celebrate the new year with special poojas, prasadam distribution, and community gathering at the temple.</p>
+          <div class="event-meta-row">
+            <span>⏰ 8:00 AM</span>
+            <span>📍 Temple Hall</span>
+          </div>
         </div>
-      </article>
+      </div>
 
-      <article class="event-card reveal">
+      <div class="event-card reveal">
         <div class="event-card-top">
-          <div class="event-date-badge"><span class="day">14</span><span class="month">Apr 2026</span></div>
-          <h3>Tamil New Year — Puthandu</h3>
+          <div class="event-date-badge">
+            <span class="day">14</span>
+            <span class="month">Apr 2026</span>
+          </div>
+          <h3>Tamil New Year — Puthandu Vazthukal</h3>
         </div>
         <div class="event-card-body">
-          <p>Tamil New Year celebration with traditional rituals, kolam decorations, and Panchanga Sravanam.</p>
-          <div class="event-meta-row"><span>⏰ 9:00 AM</span><span>📍 Temple Hall</span></div>
+          <p>A joyous celebration of Tamil New Year with traditional rituals, kolam decorations, and Panchanga Sravanam.</p>
+          <div class="event-meta-row">
+            <span>⏰ 9:00 AM</span>
+            <span>📍 Temple Hall</span>
+          </div>
         </div>
-      </article>
+      </div>
 
-      <article class="event-card reveal">
+      <div class="event-card reveal">
         <div class="event-card-top">
-          <div class="event-date-badge"><span class="day">27</span><span class="month">Jul 2026</span></div>
+          <div class="event-date-badge">
+            <span class="day">27</span>
+            <span class="month">Jul 2026</span>
+          </div>
           <h3>Karkidaka Vavu Bali</h3>
         </div>
         <div class="event-card-body">
-          <p>Annual ceremony for ancestors. Pre-registration required. Contact temple for details.</p>
-          <div class="event-meta-row"><span>⏰ 7:00 AM</span><span>📍 Riverside</span></div>
+          <p>Annual Karkidaka Vavu Bali ceremony for ancestors. Pre-registration required. Contact temple for details.</p>
+          <div class="event-meta-row">
+            <span>⏰ 7:00 AM</span>
+            <span>📍 Riverside Location</span>
+          </div>
         </div>
-      </article>
+      </div>
 
-      <article class="event-card reveal">
+      <div class="event-card reveal">
         <div class="event-card-top">
-          <div class="event-date-badge"><span class="day">01</span><span class="month">Dec 2026</span></div>
+          <div class="event-date-badge">
+            <span class="day">01</span>
+            <span class="month">Dec 2026</span>
+          </div>
           <h3>Mandala Pooja — 41 Days</h3>
         </div>
         <div class="event-card-body">
-          <p>Sacred 41-day Mandala Pooja season leading to Makaravilakku. Vratham registration open.</p>
-          <div class="event-meta-row"><span>⏰ 7:00 PM Daily</span><span>📍 Main Shrine</span></div>
+          <p>The sacred Mandala Pooja season begins — 41 days of dedicated worship leading to Makaravilakku. Vratham registration open.</p>
+          <div class="event-meta-row">
+            <span>⏰ 7:00 PM Daily</span>
+            <span>📍 Main Shrine</span>
+          </div>
         </div>
-      </article>
+      </div>
 
-      <article class="event-card reveal">
+      <div class="event-card reveal">
         <div class="event-card-top">
-          <div class="event-date-badge"><span class="day">Every</span><span class="month">Friday</span></div>
+          <div class="event-date-badge">
+            <span class="day">Every</span>
+            <span class="month">Friday</span>
+          </div>
           <h3>Weekly Ayyappa Bhajan</h3>
         </div>
         <div class="event-card-body">
-          <p>Weekly devotional bhajan session. Traditional attire required. All are welcome.</p>
-          <div class="event-meta-row"><span>⏰ 7:30 PM</span><span>📍 Temple Hall</span></div>
+          <p>Join us every Friday for the devotional Ayyappa bhajan session. Traditional attire required. All are welcome.</p>
+          <div class="event-meta-row">
+            <span>⏰ 7:30 PM</span>
+            <span>📍 Temple Hall</span>
+          </div>
         </div>
-      </article>
+      </div>
 
-      <article class="event-card reveal">
+      <div class="event-card reveal">
         <div class="event-card-top">
-          <div class="event-date-badge"><span class="day">Every</span><span class="month">Weekend</span></div>
-          <h3>Weekend Poojas &amp; Abhishekam</h3>
+          <div class="event-date-badge">
+            <span class="day">Every</span>
+            <span class="month">Weekend</span>
+          </div>
+          <h3>Weekend Poojas & Abhishekam</h3>
         </div>
         <div class="event-card-body">
-          <p>Abhishekam, Archana, and Deeparadhana conducted by our resident priests.</p>
-          <div class="event-meta-row"><span>⏰ Sat 8AM / Sun 9AM</span><span>📍 Shrine Room</span></div>
+          <p>Regular weekend poojas including Abhishekam, Archana, and Deeparadhana conducted by our resident priests.</p>
+          <div class="event-meta-row">
+            <span>⏰ Sat 8AM, Sun 9AM</span>
+            <span>📍 Shrine Room</span>
+          </div>
         </div>
-      </article>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ══ POOJA SERVICES ═══════════════════════════ -->
-<section class="services-section" id="services" aria-labelledby="services-title">
+<!-- POOJA SERVICES -->
+<section class="services-section" id="services">
   <div class="section-inner">
-    <header class="section-header reveal">
-      <p class="section-eyebrow" style="color:var(--saffron);">Sacred Services</p>
-      <h2 class="section-title" id="services-title">Pooja Services</h2>
-      <div class="section-rule" aria-hidden="true"><span style="color:var(--gold)">✦</span></div>
-    </header>
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Sacred Services</p>
+      <h2 class="section-title">Pooja Services</h2>
+      <div class="section-rule"><span>✦</span></div>
+    </div>
 
     <div class="services-grid">
       <div class="service-card reveal">
-        <span class="service-icon" aria-hidden="true">🛕</span>
+        <span class="service-icon">🛕</span>
         <h3>Abhishekam</h3>
-        <p>Sacred bathing of the deity with milk, honey, rosewater, and holy offerings.</p>
-        <a href="https://wastayyappa.square.site/online-bookings" target="_blank" rel="noopener" class="btn">Book Now →</a>
+        <p>Sacred ritual bathing of the deity with milk, honey, rosewater, and other holy offerings.</p>
+        <a href="https://wastayyappa.square.site/online-bookings" target="_blank" class="btn">Book Now →</a>
       </div>
+
       <div class="service-card reveal">
-        <span class="service-icon" aria-hidden="true">📿</span>
-        <h3>Archana &amp; Deeparadhana</h3>
-        <p>Personal archana with your family name and nakshatra. Evening deeparadhana daily.</p>
-        <a href="https://wastayyappa.square.site/online-bookings" target="_blank" rel="noopener" class="btn">Book Now →</a>
+        <span class="service-icon">📿</span>
+        <h3>Archana & Deeparadhana</h3>
+        <p>Personal archana with your family name and nakshatra. Deeparadhana performed every evening.</p>
+        <a href="https://wastayyappa.square.site/online-bookings" target="_blank" class="btn">Book Now →</a>
       </div>
+
       <div class="service-card reveal">
-        <span class="service-icon" aria-hidden="true">📅</span>
+        <span class="service-icon">📅</span>
         <h3>Dedicate a Day</h3>
-        <p>Sponsor a full day of poojas for a birthday, anniversary, or in memory of a loved one.</p>
-        <a href="https://www.newyorkayyappatemple.org/pooja-services/dedicate-a-day/" target="_blank" rel="noopener" class="btn">Learn More →</a>
+        <p>Sponsor a full day of poojas in honor of a birthday, anniversary, or in memory of a loved one.</p>
+        <a href="#" class="btn">Learn More →</a>
       </div>
+
       <div class="service-card reveal">
-        <span class="service-icon" aria-hidden="true">🕊️</span>
+        <span class="service-icon">🕊️</span>
         <h3>Hindu Funeral Services</h3>
         <p>Compassionate guidance for Hindu funeral rites and Vavu Bali ancestor ceremonies.</p>
         <a href="tel:+19144394303" class="btn">Call to Inquire →</a>
       </div>
+
       <div class="service-card reveal">
-        <span class="service-icon" aria-hidden="true">💍</span>
+        <span class="service-icon">💍</span>
         <h3>Hindu Weddings</h3>
-        <p>Traditional Vedic wedding ceremonies officiated by our experienced priests.</p>
+        <p>Traditional Hindu wedding ceremonies officiated by our experienced priests with full Vedic rituals.</p>
         <a href="tel:+19144394303" class="btn">Call to Inquire →</a>
       </div>
+
       <div class="service-card reveal">
-        <span class="service-icon" aria-hidden="true">✈️</span>
+        <span class="service-icon">✈️</span>
         <h3>Sabarimala Pilgrimage</h3>
-        <p>Annual group pilgrimage to Sabarimala, Kerala, led by Guruswami Parthasaradhi Pillai.</p>
+        <p>Annual group pilgrimage to the sacred Sabarimala temple in Kerala, led by Guruswami Parthasaradhi Pillai.</p>
         <a href="#updates" class="btn">See Updates →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ HOURS & INFO ═════════════════════════════ -->
-<section class="info-section" id="info" aria-labelledby="info-title">
+<!-- HOURS & INFO -->
+<section class="info-section" id="info">
   <div class="section-inner">
-    <header class="section-header reveal">
+    <div class="section-header reveal">
       <p class="section-eyebrow">Plan Your Visit</p>
-      <h2 class="section-title" id="info-title">Hours &amp; Information</h2>
-      <div class="section-rule" aria-hidden="true"><span>✦</span></div>
-    </header>
+      <h2 class="section-title">Hours & Information</h2>
+      <div class="section-rule"><span>✦</span></div>
+    </div>
 
     <div class="info-grid">
+      <!-- Temple Hours -->
       <div class="info-card reveal">
-        <div class="info-card-icon" aria-hidden="true">🕐</div>
+        <div class="info-card-icon">🕐</div>
         <h3>Temple Hours</h3>
         <div class="hours-row"><span class="day-name">Monday – Thursday</span><span class="time">Closed</span></div>
         <div class="hours-row"><span class="day-name">Friday</span><span class="time highlight">7:00 PM – 9:00 PM</span></div>
         <div class="hours-row"><span class="day-name">Saturday</span><span class="time highlight">8:00 AM – 1:00 PM</span></div>
         <div class="hours-row"><span class="day-name">Sunday</span><span class="time highlight">9:00 AM – 12:00 PM</span></div>
         <div class="hours-row"><span class="day-name">Festival Days</span><span class="time">Extended Hours</span></div>
-        <p style="font-size:0.78rem;color:var(--muted);line-height:1.6;margin-top:16px;">Hours may vary on festival days. Subscribe for the latest.</p>
+        <br/>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.6;">Hours may vary on festival days and special occasions. Subscribe to updates for the latest information.</p>
       </div>
 
+      <!-- Contact -->
       <div class="info-card reveal">
-        <div class="info-card-icon" aria-hidden="true">📞</div>
+        <div class="info-card-icon">📞</div>
         <h3>Contact Us</h3>
         <div class="contact-item">
-          <span class="contact-item-icon" aria-hidden="true">🧑‍💼</span>
+          <span class="contact-item-icon">🧑‍💼</span>
           <div>
             <strong>Guruswami Parthasaradhi Pillai</strong><br/>
-            Pooja Sponsorship &amp; Information<br/>
+            Pooja Sponsorship & Information<br/>
             <a href="tel:+19144394303">(914) 439-4303</a>
           </div>
         </div>
         <div class="contact-item">
-          <span class="contact-item-icon" aria-hidden="true">🙏</span>
+          <span class="contact-item-icon">🙏</span>
           <div>
             <strong>Pandit Vasudev Bhattar</strong><br/>
             <a href="tel:+15188074954">(518) 807-4954</a>
           </div>
         </div>
         <div class="contact-item">
-          <span class="contact-item-icon" aria-hidden="true">🙏</span>
+          <span class="contact-item-icon">🙏</span>
           <div>
             <strong>Pandit Satish Sharma</strong><br/>
             Contact through temple
           </div>
         </div>
         <div class="contact-item">
-          <span class="contact-item-icon" aria-hidden="true">🙏</span>
+          <span class="contact-item-icon">🙏</span>
           <div>
             <strong>Pandit Mohan Aier</strong><br/>
             Contact through temple
@@ -390,66 +1473,81 @@
         </div>
       </div>
 
+      <!-- Location -->
       <div class="info-card reveal">
-        <div class="info-card-icon" aria-hidden="true">📍</div>
+        <div class="info-card-icon">📍</div>
         <h3>Location</h3>
         <div class="contact-item">
-          <span class="contact-item-icon" aria-hidden="true">🗺️</span>
+          <span class="contact-item-icon">🗺️</span>
           <div>
             Westchester County, New York<br/>
-            <a href="https://www.newyorkayyappatemple.org/about-wast/new-location/"
-               target="_blank" rel="noopener">View New Location →</a>
+            <a href="https://www.newyorkayyappatemple.org/about-wast/new-location/" target="_blank">View New Location →</a>
           </div>
         </div>
         <div class="map-embed">
-          <a href="https://maps.google.com/?q=Westchester+Ayyappa+Temple+New+York"
-             target="_blank" rel="noopener"
+          <a href="https://maps.google.com/?q=Westchester+Ayyappa+Temple+New+York" target="_blank"
              style="color:var(--saffron);text-decoration:none;font-family:'Cinzel',serif;font-size:0.8rem;">
             📍 Open in Google Maps →
           </a>
         </div>
         <div class="contact-item" style="margin-top:12px;">
-          <span class="contact-item-icon" aria-hidden="true">🚗</span>
-          <div style="font-size:0.82rem;">Parking available on site. Check MTA for public transit options.</div>
+          <span class="contact-item-icon">🚌</span>
+          <div style="font-size:0.82rem;">
+            Accessible by car. Parking available on site.<br/>
+            Public transit: Check MTA for options.
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ APP / PWA PROMO ══════════════════════════ -->
-<section class="app-promo" aria-labelledby="app-title">
+<!-- APP PROMO -->
+<section class="app-promo">
   <div class="reveal">
     <p class="section-eyebrow" style="color:var(--saffron);">Install the Temple App</p>
-    <h2 id="app-title">Take the Temple With You</h2>
-    <p>Install our Progressive Web App directly on your phone's home screen — no App Store, completely free. Get push notifications for events, poojas, and announcements.</p>
+    <h2>Take the Temple With You</h2>
+    <p>Install our Progressive Web App directly on your phone's home screen — no App Store required, completely free. Get push notifications for events, poojas, and updates.</p>
 
-    <div class="app-features" role="list">
-      <div class="app-feature" role="listitem"><div class="app-feature-icon">🔔</div><span>Push Alerts</span></div>
-      <div class="app-feature" role="listitem"><div class="app-feature-icon">📅</div><span>Event Calendar</span></div>
-      <div class="app-feature" role="listitem"><div class="app-feature-icon">📿</div><span>Pooja Booking</span></div>
-      <div class="app-feature" role="listitem"><div class="app-feature-icon">📖</div><span>Offline Access</span></div>
-      <div class="app-feature" role="listitem"><div class="app-feature-icon">💬</div><span>Community Updates</span></div>
+    <div class="app-features">
+      <div class="app-feature">
+        <div class="app-feature-icon">🔔</div>
+        <span>Push Alerts</span>
+      </div>
+      <div class="app-feature">
+        <div class="app-feature-icon">📅</div>
+        <span>Event Calendar</span>
+      </div>
+      <div class="app-feature">
+        <div class="app-feature-icon">📿</div>
+        <span>Pooja Booking</span>
+      </div>
+      <div class="app-feature">
+        <div class="app-feature-icon">📖</div>
+        <span>Offline Access</span>
+      </div>
+      <div class="app-feature">
+        <div class="app-feature-icon">💬</div>
+        <span>Community Updates</span>
+      </div>
     </div>
 
-    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-      <button class="btn btn-primary" id="installBtn" style="display:none;">
-        📲 Install App on Your Phone
-      </button>
-      <button class="btn btn-outline" id="installHelpBtn">
-        📱 How to Install
-      </button>
-    </div>
+    <button class="btn btn-primary" onclick="installApp()" id="installBtn" style="display:none;">
+      📲 Install App on Your Phone
+    </button>
+    <button class="btn btn-outline" onclick="showInstallInstructions()">
+      📱 How to Install
+    </button>
   </div>
 </section>
 
-<!-- ══ FOOTER ══════════════════════════════════ -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="/" class="logo-wrap" aria-label="Home">
-          <div class="logo-icon" style="width:44px;height:44px;font-size:22px;" aria-hidden="true">🪔</div>
+        <a href="#" class="logo-wrap">
+          <div class="logo-icon" style="width:44px;height:44px;font-size:22px;">🪔</div>
           <div class="logo-text">
             <h1 style="font-size:0.75rem;">Westchester Ayyappa Swami Temple</h1>
             <span>WAST INC. · Non-Profit Since 1988</span>
@@ -457,41 +1555,38 @@
         </a>
         <p>A sacred space of devotion, tradition, and community. Serving the Hindu community in Westchester and the greater New York area since 1988.</p>
         <div class="social-row">
-          <a class="social-btn" href="https://wa.me/19144394303" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
-          <a class="social-btn" href="mailto:info@newyorkayyappatemple.org" aria-label="Email">📧</a>
-          <a class="social-btn" href="tel:+19144394303" aria-label="Phone">📞</a>
+          <a class="social-btn" href="https://wa.me/19144394303" target="_blank" title="WhatsApp">💬</a>
+          <a class="social-btn" href="mailto:info@newyorkayyappatemple.org" title="Email">📧</a>
+          <a class="social-btn" href="tel:+19144394303" title="Call">📞</a>
         </div>
       </div>
-
       <div class="footer-col">
         <h4>Explore</h4>
         <ul>
           <li><a href="#updates">Temple Updates</a></li>
           <li><a href="#events">Upcoming Events</a></li>
           <li><a href="#services">Pooja Services</a></li>
-          <li><a href="#info">Hours &amp; Location</a></li>
-          <li><a href="https://www.newyorkayyappatemple.org/gallery/" target="_blank" rel="noopener">Photo Gallery</a></li>
+          <li><a href="#info">Hours & Location</a></li>
+          <li><a href="https://www.newyorkayyappatemple.org/gallery/" target="_blank">Photo Gallery</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="https://wastayyappa.square.site/online-bookings" target="_blank" rel="noopener">Online Pooja Booking</a></li>
-          <li><a href="https://www.newyorkayyappatemple.org/pooja-services/dedicate-a-day/" target="_blank" rel="noopener">Dedicate a Day</a></li>
-          <li><a href="tel:+19144394303">Hindu Weddings</a></li>
-          <li><a href="tel:+19144394303">Funeral Rites</a></li>
-          <li><a href="#updates">Sabarimala Pilgrimage</a></li>
+          <li><a href="https://wastayyappa.square.site/online-bookings" target="_blank">Online Pooja Booking</a></li>
+          <li><a href="#">Dedicate a Day</a></li>
+          <li><a href="#">Hindu Weddings</a></li>
+          <li><a href="#">Funeral Rites</a></li>
+          <li><a href="#">Sabarimala Pilgrimage</a></li>
         </ul>
       </div>
-
       <div class="footer-col">
         <h4>Connect</h4>
         <ul>
           <li><a href="#subscribe">Subscribe to Updates</a></li>
-          <li><a href="https://www.newyorkayyappatemple.org/contact-us/become-a-sevak/" target="_blank" rel="noopener">Become a Sevak</a></li>
-          <li><a href="https://www.newyorkayyappatemple.org/contact-us/our-team/" target="_blank" rel="noopener">Our Team</a></li>
-          <li><a href="https://www.newyorkayyappatemple.org/about-wast/" target="_blank" rel="noopener">About WAST</a></li>
+          <li><a href="https://www.newyorkayyappatemple.org/contact-us/become-a-sevak/" target="_blank">Become a Sevak</a></li>
+          <li><a href="https://www.newyorkayyappatemple.org/contact-us/our-team/" target="_blank">Our Team</a></li>
+          <li><a href="https://www.newyorkayyappatemple.org/about-wast/" target="_blank">About WAST</a></li>
         </ul>
       </div>
     </div>
@@ -503,15 +1598,132 @@
   </div>
 </footer>
 
-<!-- ══ TOAST NOTIFICATION ═══════════════════════ -->
-<div class="toast" id="toast" role="alert" aria-live="polite">
+<!-- NOTIFICATION TOAST -->
+<div class="toast" id="toast">
   <span class="toast-icon">🔔</span>
-  <span id="toastMsg">Update!</span>
-  <button class="toast-close" onclick="hideToast()" aria-label="Dismiss">✕</button>
+  <span id="toastMsg">Notifications enabled!</span>
+  <span class="toast-close" onclick="hideToast()">✕</span>
 </div>
 
-<!-- ══ SCRIPTS ═════════════════════════════════ -->
-<script type="module" src="/js/app.js"></script>
+<script>
+  // ── MOBILE NAV ──
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+
+  // ── TOAST ──
+  function showToast(msg, icon = '🔔') {
+    const t = document.getElementById('toast');
+    const m = document.getElementById('toastMsg');
+    t.querySelector('.toast-icon').textContent = icon;
+    m.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 4000);
+  }
+  function hideToast() { document.getElementById('toast').classList.remove('show'); }
+
+  // ── PUSH NOTIFICATIONS ──
+  function requestPushPermission() {
+    if (!('Notification' in window)) {
+      showToast('Your browser doesn't support notifications', '⚠️');
+      return;
+    }
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        showToast('Push notifications enabled! You'll hear from us.', '✅');
+        // Here you would register the service worker and subscribe to FCM
+        registerServiceWorker();
+      } else {
+        showToast('Permission denied. Try enabling from browser settings.', '⚠️');
+      }
+    });
+  }
+
+  function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        console.log('SW registered:', reg.scope);
+      }).catch(err => console.log('SW registration failed:', err));
+    }
+  }
+
+  // ── EMAIL SUB ──
+  function subscribeEmail() {
+    const email = document.getElementById('emailInput').value.trim();
+    if (!email || !email.includes('@')) {
+      showToast('Please enter a valid email address', '⚠️');
+      return;
+    }
+    // TODO: Connect to EmailJS / Brevo / Mailchimp
+    showToast(`Subscribed! Updates will be sent to ${email}`, '📧');
+    document.getElementById('emailInput').value = '';
+  }
+
+  // ── SMS SUB ──
+  function subscribeSMS() {
+    const phone = document.getElementById('smsInput').value.trim();
+    if (!phone || phone.length < 10) {
+      showToast('Please enter a valid phone number', '⚠️');
+      return;
+    }
+    // TODO: Connect to Twilio / SimpleTexting
+    showToast(`You'll receive SMS alerts at ${phone}`, '📱');
+    document.getElementById('smsInput').value = '';
+  }
+
+  // ── PWA INSTALL ──
+  let deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBtn').style.display = 'inline-flex';
+  });
+
+  function installApp() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(result => {
+        if (result.outcome === 'accepted') showToast('App installed! Check your home screen.', '📲');
+        deferredPrompt = null;
+      });
+    } else {
+      showInstallInstructions();
+    }
+  }
+
+  function showInstallInstructions() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS) {
+      showToast('On iPhone: Tap Share → "Add to Home Screen" to install', '📲');
+    } else {
+      showToast('Tap the ⋮ menu in your browser → "Add to Home Screen" or "Install App"', '📲');
+    }
+  }
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── KEYBOARD NAV FIX ──
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
