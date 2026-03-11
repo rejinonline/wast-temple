@@ -1,0 +1,58 @@
+{
+  "name": "Westchester Ayyappa Swami Temple",
+  "short_name": "WAST Temple",
+  "description": "Temple updates, events & pooja bookings for the Westchester Ayyappa community.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1A0A00",
+  "theme_color": "#7B2D00",
+  "lang": "en",
+  "categories": ["religion", "community"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/badge-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "monochrome"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Updates",
+      "url": "/#updates",
+      "description": "Latest temple announcements"
+    },
+    {
+      "name": "Book a Pooja",
+      "url": "https://wastayyappa.square.site/online-bookings",
+      "description": "Book pooja services online"
+    },
+    {
+      "name": "Upcoming Events",
+      "url": "/#events",
+      "description": "See upcoming events and festivals"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}

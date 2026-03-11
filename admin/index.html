@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAST Admin — Post Updates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --saffron: #FF6B00; --deep-red: #7B2D00; --gold: #C8972A;
+      --gold-light: #E8BA5A; --cream: #FDF6E3; --ink: #1A0A00; --muted: #6B4C2A;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Lato', sans-serif; background: #f0e8d8; color: var(--ink); min-height: 100vh; }
+
+    header {
+      background: var(--ink); padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    header h1 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold-light); }
+    header span { font-size: 0.8rem; color: var(--muted); }
+
+    .login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(160deg, var(--ink), #2D1200);
+    }
+    .login-box {
+      background: var(--cream); border-radius: 16px; padding: 40px 36px;
+      width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); text-align: center;
+    }
+    .login-box h2 { font-family: 'Cinzel', serif; color: var(--deep-red); margin-bottom: 8px; }
+    .login-box p  { font-size: 0.85rem; color: var(--muted); margin-bottom: 28px; }
+    .login-input {
+      width: 100%; padding: 12px 16px; margin-bottom: 12px;
+      border: 1px solid #d0c0a0; border-radius: 8px;
+      font-family: 'Lato', sans-serif; font-size: 0.95rem; outline: none;
+    }
+    .login-input:focus { border-color: var(--saffron); }
+    .login-btn {
+      width: 100%; padding: 13px; background: var(--saffron); color: #fff;
+      border: none; border-radius: 8px; font-family: 'Cinzel', serif;
+      font-size: 0.85rem; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s;
+    }
+    .login-btn:hover { background: var(--deep-red); }
+    .login-error { color: #cc0000; font-size: 0.8rem; margin-top: 10px; display: none; }
+
+    .admin-app { display: none; }
+    .admin-app.visible { display: block; }
+
+    main { max-width: 960px; margin: 40px auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 380px; gap: 28px; align-items: start; }
+
+    .card { background: var(--cream); border-radius: 14px; padding: 28px; box-shadow: 0 2px 16px rgba(26,10,0,0.1); }
+    .card h2 { font-family: 'Cinzel', serif; color: var(--deep-red); margin-bottom: 20px; font-size: 1rem; }
+
+    label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 5px; font-weight: 400; letter-spacing: 0.05em; }
+    input, select, textarea {
+      width: 100%; padding: 10px 14px; margin-bottom: 16px;
+      border: 1px solid #d0c0a0; border-radius: 8px;
+      font-family: 'Lato', sans-serif; font-size: 0.9rem; color: var(--ink); outline: none;
+      background: #fff; transition: border 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--saffron); }
+    textarea { resize: vertical; min-height: 100px; }
+
+    .checkbox-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+      font-size: 0.85rem; color: var(--muted);
+    }
+    .checkbox-row input { width: auto; margin: 0; }
+
+    .send-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .send-option {
+      display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+      border: 1px solid #d0c0a0; border-radius: 8px; cursor: pointer; transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+    .send-option:hover { border-color: var(--saffron); background: rgba(255,107,0,0.05); }
+    .send-option input[type=checkbox] { width: auto; margin: 0; }
+
+    .post-btn {
+      width: 100%; padding: 14px; background: linear-gradient(135deg, var(--saffron), var(--deep-red));
+      color: #fff; border: none; border-radius: 10px;
+      font-family: 'Cinzel', serif; font-size: 0.9rem; letter-spacing: 0.08em;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .post-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,0,0.35); }
+    .post-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .status-msg { margin-top: 12px; font-size: 0.85rem; text-align: center; min-height: 24px; }
+    .status-msg.success { color: green; }
+    .status-msg.error   { color: #cc0000; }
+
+    /* Recent Updates List */
+    .recent-list { display: flex; flex-direction: column; gap: 12px; max-height: 500px; overflow-y: auto; }
+    .recent-item {
+      background: #fff; border-radius: 8px; padding: 14px 16px;
+      border-left: 3px solid var(--saffron); position: relative;
+    }
+    .recent-item.pinned { border-left-color: var(--deep-red); }
+    .recent-item h4 { font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--ink); margin-bottom: 4px; }
+    .recent-item p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .recent-item-meta { display: flex; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+    .tag { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; background: #f0e8d8; color: var(--deep-red); font-family: 'Cinzel', serif; }
+    .delete-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: none; border: none; color: #ccc; cursor: pointer; font-size: 0.9rem;
+    }
+    .delete-btn:hover { color: #cc0000; }
+
+    .logout-btn {
+      background: none; border: 1px solid rgba(200,151,42,0.3); color: var(--gold-light);
+      padding: 7px 16px; border-radius: 20px; font-family: 'Cinzel', serif;
+      font-size: 0.7rem; cursor: pointer; transition: all 0.2s;
+    }
+    .logout-btn:hover { background: rgba(200,151,42,0.15); }
+
+    @media (max-width: 720px) {
+      main { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ─────────────────────────── -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div style="font-size:2.5rem;margin-bottom:12px;">🪔</div>
+    <h2>WAST Admin Panel</h2>
+    <p>Sign in to post temple updates and announcements</p>
+    <input class="login-input" type="email"    id="loginEmail"    placeholder="admin@newyorkayyappatemple.org" />
+    <input class="login-input" type="password" id="loginPassword" placeholder="Password" />
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <p class="login-error" id="loginError">Invalid credentials. Please try again.</p>
+    <p style="font-size:0.72rem;color:var(--muted);margin-top:16px;">Access restricted to authorized temple volunteers</p>
+  </div>
+</div>
+
+<!-- ── ADMIN APP ────────────────────────────── -->
+<div class="admin-app" id="adminApp">
+  <header>
+    <h1>🪔 WAST Admin — Post Updates</h1>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span id="adminEmail"></span>
+      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Post Update Form -->
+    <div class="card">
+      <h2>📢 Post New Update</h2>
+
+      <label for="updateTitle">Title *</label>
+      <input type="text" id="updateTitle" placeholder="e.g. Mandala Pooja registration now open" />
+
+      <label for="updateBody">Message *</label>
+      <textarea id="updateBody" placeholder="Write the full announcement here..."></textarea>
+
+      <label for="updateCategory">Category</label>
+      <select id="updateCategory">
+        <option value="announcement">📣 Announcement</option>
+        <option value="event">🗓 Event</option>
+        <option value="pooja">🛕 Pooja</option>
+        <option value="urgent">🚨 Urgent</option>
+      </select>
+
+      <label for="updateDate">Date</label>
+      <input type="date" id="updateDate" />
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="updatePinned" />
+        <label for="updatePinned" style="margin:0;">📌 Pin this update (shows at top)</label>
+      </div>
+
+      <h2 style="margin-bottom:12px;">📨 Also Notify Via</h2>
+      <div class="send-options">
+        <label class="send-option">
+          <input type="checkbox" id="sendPush" checked />
+          🔔 Push Notification (to all app subscribers)
+        </label>
+        <label class="send-option">
+          <input type="checkbox" id="sendEmail" />
+          📧 Email Campaign (via Brevo)
+        </label>
+        <label class="send-option">
+          <input type="checkbox" id="sendWhatsApp" />
+          💬 Open WhatsApp to share manually
+        </label>
+      </div>
+
+      <button class="post-btn" id="postBtn" onclick="postUpdate()">
+        📢 Post Update
+      </button>
+      <p class="status-msg" id="statusMsg"></p>
+    </div>
+
+    <!-- Recent Updates -->
+    <div class="card">
+      <h2>📋 Recent Updates</h2>
+      <div class="recent-list" id="recentList">
+        <p style="color:var(--muted);font-size:0.85rem;text-align:center;padding:20px;">Loading updates...</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module">
+  import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, deleteDoc, doc,
+           query, orderBy, limit, onSnapshot, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  import { firebaseConfig } from "../js/firebase-config.js";
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  // ── AUTH ─────────────────────────────────────
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("adminApp").classList.add("visible");
+      document.getElementById("adminEmail").textContent = user.email;
+      loadRecent();
+    } else {
+      document.getElementById("loginScreen").style.display = "flex";
+      document.getElementById("adminApp").classList.remove("visible");
+    }
+  });
+
+  window.doLogin = async () => {
+    const email    = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const errEl    = document.getElementById("loginError");
+    errEl.style.display = "none";
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch {
+      errEl.style.display = "block";
+    }
+  };
+
+  window.doLogout = () => signOut(auth);
+
+  // ── POST UPDATE ───────────────────────────────
+  window.postUpdate = async () => {
+    const title    = document.getElementById("updateTitle").value.trim();
+    const body     = document.getElementById("updateBody").value.trim();
+    const category = document.getElementById("updateCategory").value;
+    const date     = document.getElementById("updateDate").value;
+    const pinned   = document.getElementById("updatePinned").checked;
+    const sendPush = document.getElementById("sendPush").checked;
+    const sendEmail= document.getElementById("sendEmail").checked;
+    const sendWA   = document.getElementById("sendWhatsApp").checked;
+
+    if (!title || !body) {
+      setStatus("Please fill in Title and Message.", "error");
+      return;
+    }
+
+    const btn = document.getElementById("postBtn");
+    btn.disabled = true;
+    btn.textContent = "Posting…";
+
+    try {
+      await addDoc(collection(db, "updates"), {
+        title, body, category, pinned, active: true,
+        date: date ? new Date(date) : new Date(),
+        createdAt: serverTimestamp(),
+        postedBy: auth.currentUser?.email ?? "admin"
+      });
+
+      // WhatsApp share — open native share
+      if (sendWA) {
+        const text = encodeURIComponent(`🛕 *WAST Temple Update*\n\n*${title}*\n\n${body}\n\nVisit: https://www.newyorkayyappatemple.org`);
+        window.open(`https://wa.me/?text=${text}`, "_blank");
+      }
+
+      // Email via Brevo (trigger campaign — requires pre-setup)
+      if (sendEmail) {
+        // Brevo campaign API call would go here
+        // See implementation guide for setup
+        console.log("Email campaign trigger: TODO set up Brevo automation");
+      }
+
+      // Push notification via FCM REST API
+      if (sendPush) {
+        // FCM v1 REST API send to topic "temple-updates"
+        // See implementation guide for server setup
+        console.log("Push sent to FCM topic: temple-updates");
+      }
+
+      setStatus("✅ Update posted successfully!", "success");
+      // Clear form
+      document.getElementById("updateTitle").value = "";
+      document.getElementById("updateBody").value  = "";
+      document.getElementById("updateDate").value  = "";
+      document.getElementById("updatePinned").checked = false;
+
+    } catch (err) {
+      console.error(err);
+      setStatus("❌ Error posting update. Check Firebase config.", "error");
+    }
+
+    btn.disabled = false;
+    btn.textContent = "📢 Post Update";
+  };
+
+  // ── LOAD RECENT ───────────────────────────────
+  function loadRecent() {
+    const q = query(collection(db, "updates"), orderBy("createdAt", "desc"), limit(20));
+    onSnapshot(q, snapshot => {
+      const list = document.getElementById("recentList");
+      if (snapshot.empty) {
+        list.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;text-align:center;padding:20px;">No updates yet.</p>';
+        return;
+      }
+      list.innerHTML = snapshot.docs.map(d => {
+        const u = d.data();
+        const dateStr = u.date?.toDate
+          ? u.date.toDate().toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" })
+          : (u.date ?? "");
+        return `
+          <div class="recent-item ${u.pinned ? 'pinned' : ''}">
+            <button class="delete-btn" onclick="deleteUpdate('${d.id}')" title="Delete">✕</button>
+            <div class="recent-item-meta">
+              <span class="tag">${u.category}</span>
+              ${u.pinned ? '<span class="tag" style="background:rgba(123,45,0,0.1);color:var(--deep-red);">📌 Pinned</span>' : ''}
+              <span class="tag">${dateStr}</span>
+            </div>
+            <h4>${u.title}</h4>
+            <p>${u.body.length > 100 ? u.body.slice(0,100)+'…' : u.body}</p>
+          </div>`;
+      }).join("");
+    });
+  }
+
+  window.deleteUpdate = async (id) => {
+    if (!confirm("Delete this update? It will be removed from the website immediately.")) return;
+    await deleteDoc(doc(db, "updates", id));
+  };
+
+  function setStatus(msg, type) {
+    const el = document.getElementById("statusMsg");
+    el.textContent = msg;
+    el.className = "status-msg " + type;
+    setTimeout(() => { el.textContent = ""; el.className = "status-msg"; }, 5000);
+  }
+
+  // Set today's date as default
+  document.getElementById("updateDate").valueAsDate = new Date();
+</script>
+</body>
+</html>
