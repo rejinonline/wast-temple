@@ -1,4 +1,4 @@
-# 🛕 Westchester Ayyappa Swami Temple — Website & App
+# 🛕 New York Ayyappa Swami Temple — Website & App
 
 **WAST INC.** · Non-Profit · Est. 1988
 
