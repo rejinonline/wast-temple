@@ -1625,12 +1625,12 @@
   // ── PUSH NOTIFICATIONS ──
   function requestPushPermission() {
     if (!('Notification' in window)) {
-      showToast('Your browser doesn't support notifications', '⚠️');
+      showToast('Your browser does not support notifications', '⚠️');
       return;
     }
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
-        showToast('Push notifications enabled! You'll hear from us.', '✅');
+        showToast('Push notifications enabled! You will hear from us.', '✅');
         // Here you would register the service worker and subscribe to FCM
         registerServiceWorker();
       } else {
@@ -1667,7 +1667,7 @@
       return;
     }
     // TODO: Connect to Twilio / SimpleTexting
-    showToast(`You'll receive SMS alerts at ${phone}`, '📱');
+    showToast(`You will receive SMS alerts at ${phone}`, '📱');
     document.getElementById('smsInput').value = '';
   }
 
