@@ -116,3 +116,4 @@ function showInstallInstructions() {
     : "Tap the ⋮ menu in Chrome → \"Install App\" or \"Add to Home Screen\"";
   showToast(msg, "📲");
 }
+// Last updated: Sat Mar 14 22:53:46 EDT 2026
