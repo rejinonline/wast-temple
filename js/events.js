@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────
-//  WAST Temple — Live Events from Firestore
-// ─────────────────────────────────────────────
-
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
@@ -22,46 +18,30 @@ function buildEventCard(data) {
       <div class="event-card-body">
         <p>${data.description ?? ""}</p>
         <div class="event-meta-row">
-          <span>⏰ ${data.time ?? ""}</span>
-          <span>📍 ${data.location ?? ""}</span>
+          <span>&#9200; ${data.time ?? ""}</span>
+          <span>&#128205; ${data.location ?? ""}</span>
         </div>
       </div>
     </article>`;
 }
 
 export async function loadEvents(containerEl) {
-  containerEl.innerHTML = `
-    <div class="update-skeleton" style="height:200px;border-radius:24px;"></div>
-    <div class="update-skeleton" style="height:200px;border-radius:24px;"></div>
-    <div class="update-skeleton" style="height:200px;border-radius:24px;"></div>`;
-
+  containerEl.innerHTML = `<div class="update-skeleton" style="height:200px;border-radius:24px;"></div><div class="update-skeleton" style="height:200px;border-radius:24px;"></div><div class="update-skeleton" style="height:200px;border-radius:24px;"></div>`;
   try {
     console.log("Fetching events from Firestore...");
     const snapshot = await getDocs(collection(db, "events"));
     console.log("Total events fetched:", snapshot.size);
-
     const active = snapshot.docs
       .map(d => ({ id: d.id, ...d.data() }))
       .filter(d => d.active === true)
       .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
-
     console.log("Active events:", active.length);
-
     if (active.length === 0) {
-      containerEl.innerHTML = `
-        <div class="event-card reveal visible" style="padding:40px;text-align:center;grid-column:1/-1;">
-          <p style="color:var(--muted);">No upcoming events at this time. Check back soon! 🙏</p>
-        </div>`;
+      containerEl.innerHTML = `<div class="event-card reveal visible" style="padding:40px;text-align:center;grid-column:1/-1;"><p style="color:var(--muted);">No upcoming events at this time. Check back soon!</p></div>`;
       return;
     }
-
     containerEl.innerHTML = active.map(d => buildEventCard(d)).join("");
-
   } catch (err) {
     console.error("Events Firestore error:", err);
-    containerEl.innerHTML = `
-      <div class="event-card reveal visible" style="padding:40px;text-align:center;grid-column:1/-1;">
-        <p style="color:var(--muted);">Unable to load events. Please try again later.</p>
-      </div>`;
   }
 }
