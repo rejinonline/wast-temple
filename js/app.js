@@ -7,9 +7,9 @@ import { loadEvents }         from "./events.js";
 import { requestPushPermission, subscribeEmail, subscribeSMS } from "./notifications.js";
 
 // ── SERVICE WORKER REGISTRATION ──────────────
-if ("serviceWorker" in navigator) {
+if (false) { // SW disabled - causes caching issues
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js")
+    navigator.serviceWorker.register("./sw.js")
       .then(reg => console.log("SW registered:", reg.scope))
       .catch(err => console.warn("SW failed:", err));
   });
