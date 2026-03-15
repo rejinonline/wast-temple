@@ -316,3 +316,16 @@ footer { background:var(--ink); color:var(--cream); padding:60px 24px 30px; }
   section { padding:60px 16px; }
   .toast { right:12px; left:12px; max-width:none; }
 }
+
+/* ── UPDATE & EVENT IMAGES ─────────────────── */
+.update-image-wrap {
+  margin-top: 14px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.update-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
