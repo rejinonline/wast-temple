@@ -22,6 +22,11 @@ function buildEventCard(data) {
           <span>&#128205; ${data.location ?? ""}</span>
         </div>
       </div>
+      ${data.imageUrl ? `
+        <div class="update-image-wrap">
+          <img src="${data.imageUrl}" alt="${data.title}" class="update-image"
+               onerror="this.parentElement.style.display='none'" />
+        </div>` : ""}
     </article>`;
 }
 
