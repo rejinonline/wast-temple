@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────
 
 import { listenToUpdates }   from "./updates.js";
-import { loadEvents }         from "./events.js";
+import { loadEvents }         from "./events.js?v=2";
 import { requestPushPermission, subscribeEmail, subscribeSMS } from "./notifications.js";
 
 // ── SERVICE WORKER REGISTRATION ──────────────
