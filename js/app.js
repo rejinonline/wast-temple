@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────
 
 import { listenToUpdates }   from "./updates.js";
+import { loadEvents }         from "./events.js";
 import { requestPushPermission, subscribeEmail, subscribeSMS } from "./notifications.js";
 
 // ── SERVICE WORKER REGISTRATION ──────────────
@@ -21,7 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateCards = document.getElementById("updateCards");
   const tickerTrack = document.getElementById("tickerTrack");
   if (updateCards && tickerTrack) {
-    listenToUpdates(updateCards, tickerTrack);
+    listenToUpdates(updateCards, tickerTrack).catch(console.error);
+
+  // Boot Firestore live events
+  const eventsGrid = document.getElementById('eventsGrid');
+  if (eventsGrid) loadEvents(eventsGrid).catch(console.error);
   }
 
   // Scroll reveal
